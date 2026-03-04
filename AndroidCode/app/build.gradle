@@ -1,0 +1,79 @@
+// 1.  必须补上头部插件引用，否则 android {} 会报错
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    namespace 'com.gut.focusbili'
+    compileSdk 36
+
+    defaultConfig {
+        applicationId "com.gut.focusbili"
+        minSdk 24
+        targetSdk 36
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        // 默认 APP 名
+        manifestPlaceholders = [appName: "FocusBili"]
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    // 开启 BuildConfig 和 ViewBinding
+    buildFeatures {
+        buildConfig true
+        viewBinding true
+    }
+
+    // 定义风味维度
+    flavorDimensions "user"
+
+    // 在这里写添加批量生成的网址，遵循语法，需要多的网址就照搬复制
+    productFlavors {
+        // --- 第 1 个：???? (focusbili) ---
+        app1 {
+            dimension "user"
+            applicationId "com.gut.focusbili1"
+            manifestPlaceholders = [appName: "????"]
+            buildConfigField "String", "TARGET_UID", "\"?????\""
+        }
+
+        // --- 第 2 个：???? (focusbili2) ---
+        app2 {
+            dimension "user"
+            applicationId "com.gut.focusbili2"
+            manifestPlaceholders = [appName: "?????"]
+            buildConfigField "String", "TARGET_UID", "\"??????\""
+        }
+
+    }
+}
+
+// 2.  必须补上底部依赖库，否则代码里找不到 WebView 和 AppCompatActivity
+dependencies {
+    implementation 'androidx.core:core-ktx:1.10.1'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.9.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+}
